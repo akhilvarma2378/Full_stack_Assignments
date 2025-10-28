@@ -1,0 +1,1 @@
+Everything cleared by Writefile function
