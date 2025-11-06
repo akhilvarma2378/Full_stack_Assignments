@@ -12,7 +12,13 @@
     }
 
     function removeTodoFromDom(todo) {
-      
+       todoState = todoState.filter((thistodo) => {
+          if(thistodo.id === todo.id)
+          {
+            return false;
+          }
+          return true;
+       })
     }
 
     function updateTodoInDom(oldTodo, newTodo) {
@@ -24,13 +30,17 @@
       // More specifically, find out what todos are - 
       // 1. added
       // 2. deleted
-      // 3. updated
-      const added = [];
-      const deleted = [];
-      const updated = [];
+      // 3. updated 
+      const added = oldTodoState.filter((oldtodo)=> !newTodos.some((newtodo)=>{ return newtodo.id === oldtodo.id}));
+      const deleted = newTodos.filter((newtodo)=>!oldTodoState.some((oldtodo) => oldtodo.id === newtodo.id));
+      const updated = oldTodoState.filter((oldtodo)=> newTodos.some((newtodo)=>{ return newtodo.id === oldtodo.id && newtodo.title != oldtodo.title}));;
       // calculate these 3 arrays
       // call addTodo, removeTodo, updateTodo functions on each of the
       // elements
+      added.forEach(addTodoToDom);
+      deleted.forEach(removeTodoFromDom);
+      updated.forEach(updateTodoInDom);
+
       oldTodoState = newTodos;
     }
 
